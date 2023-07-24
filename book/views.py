@@ -56,19 +56,6 @@ def get_books(request):
 
         serializer = BookSerializer(filtered_books, many=True)
 
-        # data = [
-        #     {
-        #         'title': book.title,
-        #         'authors': book.authors,
-        #         'published_date': book.published_date,
-        #         'categories': book.categories,
-        #         'average_rating': book.average_rating,
-        #         'ratings_count': book.ratings_count,
-        #         'thumbnail': book.thumbnail
-        #     }
-        #     for book in filtered_books
-        # ]
-
         return JsonResponse(serializer.data, safe=False)
 
 def get_book(request, book_id):
@@ -76,15 +63,7 @@ def get_book(request, book_id):
         try:
             filtered_book = Book.objects.get(id=book_id)
             serializer = BookSerializer(filtered_book, many=False)
-            # data = {
-            #     'title': book.title,
-            #     'authors': book.authors,
-            #     'published_date': book.published_date,
-            #     'categories': book.categories,
-            #     'average_rating': book.average_rating,
-            #     'ratings_count': book.ratings_count,
-            #     'thumbnail': book.thumbnail
-            # }
+
             return JsonResponse(serializer.data)
         except Book.DoesNotExist:
             return JsonResponse({'message': 'Book not found.'})
